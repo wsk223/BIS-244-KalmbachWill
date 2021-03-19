@@ -4,19 +4,11 @@ cat("\014")
 install.packages("here")
 library(here)
 library(tidyverse)
-
-
 RESULTS <- read_csv("AAPL.csv")
-
-
 n <- length(RESULTS$Date)
 for (i in 2:n) {
   RESULTS$`Adj Close`[i] <- (RESULTS$Open[i]-RESULTS$Close[i-1]) 
 }
-
-View(RESULTS)
-
-
 mean(RESULTS$`Adj Close`)
 mean(RESULTS$'Adj Close', na.rm=TRUE)
 meancases <- mean(RESULTS$'Adj Close', na.rm=TRUE)
@@ -32,13 +24,10 @@ for (i in 1:n) {
   }
 }
 
-
 RESULTS$'Adj Close' <- 1
 for (i in 2:n) {
   RESULTS$'Adj Close'[i] <- (RESULTS$Close[i]-RESULTS$Close[i-1]) 
 }
-
-
 for (i in 1:n) {
   if(RESULTS$'Adj Close'[i]>=0) {
     RESULTS$above_close[i] <- RESULTS$'Adj Close'[i]
@@ -46,7 +35,6 @@ for (i in 1:n) {
     RESULTS$below_close[i] <- RESULTS$'Adj Close'[i]
   }
 }
-
 
 p = ggplot() + 
   geom_point(data = RESULTS, aes(x = Date, y = above_close), color = "green") +
